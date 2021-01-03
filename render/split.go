@@ -115,6 +115,11 @@ func camelizeDown(word string) string {
 	return strings.ToLower(word[:1]) + word[1:]
 }
 
+// snakeCase converts a name or other string into a snake case version.
+func snakeCase(word string) string {
+	return strings.ToLower(strings.Join(Split(word), "_"))
+}
+
 func isAcronym(word string) bool {
 	for _, ac := range baseAcronyms {
 		if strings.ToUpper(ac) == strings.ToUpper(word) {

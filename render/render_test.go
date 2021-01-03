@@ -76,6 +76,20 @@ func TestCamelizeDown(t *testing.T) {
 	}
 }
 
+func TestSnakeCase(t *testing.T) {
+	for in, expected := range map[string]string{
+		"CamelsAreGreat": "camels_are_great",
+		"ID":             "id",
+		"HTML":           "html",
+		"PreviewHTML":    "preview_html",
+	} {
+		actual := snakeCase(in)
+		if actual != expected {
+			t.Errorf("%s expected: %q but got %q", in, expected, actual)
+		}
+	}
+}
+
 func TestFormatTags(t *testing.T) {
 	is := is.New(t)
 
@@ -110,17 +124,5 @@ func TestFormatCommentText(t *testing.T) {
 
 	actual = strings.TrimSpace(string(formatCommentText("What about\nnew lines?")))
 	is.Equal(actual, `// What about new lines?`)
-
-}
-
-func TestFormatComment(t *testing.T) {
-	is := is.New(t)
-
-	longComment := `This is a long comment that will end up spanning
-multiple lines so we get to test the indent string option
-in formatComment.`
-	actual := strings.TrimSpace(string(formatComment(longComment, "\t\t")))
-	is.Equal(actual, `This is a long comment that will end up spanning multiple lines so we get to
-		test the indent string option in formatComment.`)
 
 }
